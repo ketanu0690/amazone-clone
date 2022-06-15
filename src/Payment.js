@@ -15,73 +15,75 @@ const Payment = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [successed, setSuccessed] = useState(false);
-  const [processing, setProcessing] = useState("");
+  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState(true);
   const history = useNavigate();
 
-  useEffect(() => {
+  // useEffect(() => {
     //  generate the special stripe secret which allows us to charge a customer
-    const getSecret = async () => {
-      const response = await axios({
-        method: "post",
+    // const getSecret = async () => {
+      // const response = await axios({
+        // method: "post",
         //stripe expects the total in a currencies subunits
-        url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
-      });
+        // url:`/payments/create?total=${getBasketTotal(basket) * 100}`,
+      // });
       // const responseData = await response.json();
       // console.log(response);
-      setClientSecret(response.data.clientSecret);
-    };
-    getSecret();
-  }, [basket]);
+      // setClientSecret(response.data.clientSecret);
+    // };
+    // getSecret();
 
-  console.log("secreate is", clientSecret);
+  // }, [basket]);
+
+  // console.log("secreate is", clientSecret);
 
   const handleSubmit = async (event) => {
-    console.log(event);
+    // console.log(event);
     event.preventDefault();
-    setProcessing(true);
+    // setProcessing(true);
 
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
-        //paymentIntent = payment confirmation
-        console.log(paymentIntent);
+    // const payload = await stripe
+    //   .confirmCardPayment(clientSecret, {
+    //     payment_method: {
+    //       card: elements.getElement(CardElement),
+    //     },
+    //   })
+    //   .then(({ paymentIntent }) => {
+    //     //paymentIntent = payment confirmation
+    //     // console.log(paymentIntent);
 
-        db.colleection("users")
-          .doc(user?.uid)
-          .collection("orders")
-          .doc(paymentIntent.id)
-          .set({
-            basket: basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created,
-          });
+    //     db.colleection("users")
+    //       .doc(user?.uid)
+    //       .collection("orders")
+    //       .doc(paymentIntent.id)
+    //       .set({
+    //         basket: basket,
+    //         amount: paymentIntent.amount,
+    //         created: paymentIntent.created,
+    //       });
 
-        setSuccessed(true);
-        setError(null);
-        setProcessing(false);
+    //     setSuccessed(true);
+    //     setError(null);
+    //     setProcessing(false);
 
         dispatch({
           type: "EMPTY_BASKET",
         });
 
         history("/orders");
-      })
-      .catch((error) => {
-        setError(error.message);
-        setProcessing(false);
-      });
-  console.log(payload)
+      // })
+      // .catch((error) => {
+      //   setError(error.message);
+      //   setProcessing(false);
+      // });
+  // console.log(payload)
     };
 
+
   const handleChange = (event) => {
-    console.log(event);
+    // console.log(event);
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };

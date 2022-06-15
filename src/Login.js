@@ -16,12 +16,16 @@ const signIn = e =>{
 
   signInWithEmailAndPassword(auth,email, password)
   .then(cred =>{
-    console.log(cred);
+    // console.log(cred);
+    // console.log("sign in successful");
     history('/');
   }
   )
   .catch(error =>{
-    console.log(error);
+    // console.log("error");
+    // console.log(error);
+    // alert(error.message, "error");
+    alert(`Please try again ${error.message}`  , "error");
   }
   )
 }
@@ -30,7 +34,10 @@ const register = e =>{
   e.preventDefault();
   createUserWithEmailAndPassword(auth,email,password).then(
     (Auth) =>{
-      console.log(Auth)
+      // console.log(Auth)
+      history('/');
+      alert("Registration successful");
+      
     }
   ).catch(
     (error) =>{

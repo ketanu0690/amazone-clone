@@ -18,7 +18,6 @@ const promise  = loadStripe(
   "pk_test_51L5shmSHSqj4QW43JOZoKNLeauTjWeVRAvMSC704Ue1yZ2dDwv8nNiXDmXnjpzywXAHQoCT3ln15O9W1UMFjVIIZ00TPQuV4UC"
 );
 
-
 function App() {
 const [{}, dispatch] = useStateValue();
 
@@ -39,7 +38,6 @@ useEffect(()=>{
         type:'SET_USER',
         user:null
       })
-
     }
   })
 },[])
